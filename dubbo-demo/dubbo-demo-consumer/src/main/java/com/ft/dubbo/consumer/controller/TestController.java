@@ -1,5 +1,7 @@
 package com.ft.dubbo.consumer.controller;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,12 +20,25 @@ public class TestController {
 	@Autowired
 	private SimpleRemoteService simpleRemoteService;
 	
-	@RequestMapping("/getServerResp")
+//	@RequestMapping("/getServerResp")
+//	@ResponseBody
+//	public String getServerResp(HttpServletRequest request, HttpServletResponse response){
+//		System.out.println("执行到客户端这里");
+//		String resultJson = simpleRemoteService.getSimpleStr(UUID.randomUUID().toString());
+//		System.out.println("服务器返回" + resultJson);
+//		resultJson = resultJson + "(来自服务器)";
+//		return resultJson;
+//	}
+	
 	@ResponseBody
-	public String getServerResp(HttpServletRequest request, HttpServletResponse response){
+	@RequestMapping("/getServerResp")
+	public Object getServerResp(HttpServletRequest request, HttpServletResponse response){
 		System.out.println("执行到客户端这里");
 		String resultJson = simpleRemoteService.getSimpleStr(UUID.randomUUID().toString());
 		System.out.println("服务器返回" + resultJson);
-		return resultJson;
+		resultJson = resultJson + "(来自服务器)";
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("resultJson", resultJson);
+		return map;
 	}
 }
